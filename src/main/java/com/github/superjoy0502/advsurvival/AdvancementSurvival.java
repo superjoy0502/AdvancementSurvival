@@ -19,6 +19,7 @@ import java.util.UUID;
 
 public class AdvancementSurvival extends JavaPlugin implements Listener {
     FileConfiguration config = getConfig();
+    List<Player> onlineplayers;
 
     @Override
     public void onEnable() {
@@ -27,27 +28,37 @@ public class AdvancementSurvival extends JavaPlugin implements Listener {
 
         // Enable our class to check for new players using onPlayerJoin()
         getServer().getPluginManager().registerEvents(this, this);
+
+        onlineplayers = (List<Player>) Bukkit.getOnlinePlayers();
+        for (int i = 0; i < onlineplayers.size(); i++){
+            if (!config.getStringList("players").contains(String.valueOf(onlineplayers.get(i).getUniqueId()))){
+                config.addDefault("players." + onlineplayers.get(i).getUniqueId(), new ArrayList<String>());
+            }
+        }
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
-        config.addDefault("player." + String.valueOf(event.getPlayer().getUniqueId()), new ArrayList<String>());
-        saveConfig();
+        for (int i = 0; i < onlineplayers.size(); i++){
+            if (!config.getStringList("players").contains(String.valueOf(onlineplayers.get(i).getUniqueId()))){
+                config.addDefault("players." + event.getPlayer().getUniqueId(), new ArrayList<String>());
+                saveConfig();
+            }
+        }
     }
 
     @EventHandler
     public void onAdvancementAchieved(PlayerAdvancementDoneEvent event){
         UUID uuid = event.getPlayer().getUniqueId();
-        Advancement advancement = event.getAdvancement();
-        String advancementKey = String.valueOf(advancement.getKey());
+        String advancementKey = String.valueOf(event.getAdvancement().getKey());
 
         if (!advancementKey.contains("minecraft:recipes/")){
             if (Bukkit.getOfflinePlayer(uuid) != null && Bukkit.getOfflinePlayer(uuid).isOnline()) {
                 getLogger().info(Bukkit.getPlayer(uuid).getName() + " has completed the advancement: " + advancementKey + "!");
             }
-            ArrayList<String> advancementList = (ArrayList<String>) config.getStringList(String.valueOf(uuid));
+            ArrayList<String> advancementList = (ArrayList<String>) config.getStringList("players." + uuid);
             advancementList.add(advancementKey);
-            config.set("player." + String.valueOf(uuid), advancementList);
+            config.set("players." + uuid, advancementList);
             saveConfig();
         }
     }

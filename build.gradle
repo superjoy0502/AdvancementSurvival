@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'com.github.superjoy0502.advsurvival'
-version '0.0.12'
+version '0.0.13'
 
 repositories {
     mavenCentral()

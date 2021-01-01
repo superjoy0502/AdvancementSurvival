@@ -20,13 +20,12 @@ import java.util.List;
 import java.util.UUID;
 
 public class AdvancementSurvival extends JavaPlugin implements Listener {
-    FileConfiguration config = getConfig();
     List<Player> onlineplayers;
 
     @Override
     public void onEnable() {
 //        saveDefaultConfig();
-        config.options().copyDefaults(true);
+        getConfig().options().copyDefaults(true);
         getLogger().info("onEnable");
 
         // Enable our class to check for new players using onPlayerJoin()
@@ -62,11 +61,11 @@ public class AdvancementSurvival extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
         getLogger().info("A player joined.");
-        getLogger().info("players:\n"+config.getStringList("players"));
-        if (!config.getStringList("players").contains(String.valueOf(event.getPlayer().getUniqueId()))){
+        getLogger().info("players:\n"+getConfig().getStringList("players"));
+        if (!getConfig().getStringList("players").contains(String.valueOf(event.getPlayer().getUniqueId()))){
             getLogger().warning("A config for " + event.getPlayer().getName() + " does not exist! Creating one...");
 
-            config.addDefault("players." + event.getPlayer().getUniqueId(), new ArrayList<String>());
+            getConfig().addDefault("players." + event.getPlayer().getUniqueId(), new ArrayList<String>());
             saveConfig();
             getLogger().info("Config for " + event.getPlayer().getName() + " successfully created.");
             return;
@@ -84,7 +83,7 @@ public class AdvancementSurvival extends JavaPlugin implements Listener {
             }
         }
 
-        config.set("players." + event.getPlayer().getUniqueId(), advancementArrayList);
+        getConfig().set("players." + event.getPlayer().getUniqueId(), advancementArrayList);
         getLogger().info("Config for " + event.getPlayer().getName() + " successfully created.");
     }
 
@@ -99,9 +98,9 @@ public class AdvancementSurvival extends JavaPlugin implements Listener {
             if (Bukkit.getOfflinePlayer(uuid) != null && Bukkit.getOfflinePlayer(uuid).isOnline()) {
                 getLogger().info(Bukkit.getPlayer(uuid).getName() + " has completed the advancement: " + advancementKey + "!");
             }
-            ArrayList<String> advancementList = (ArrayList<String>) config.getStringList("players." + uuid);
+            ArrayList<String> advancementList = (ArrayList<String>) getConfig().getStringList("players." + uuid);
             advancementList.add(advancementKey);
-            config.set("players." + uuid, advancementList);
+            getConfig().set("players." + uuid, advancementList);
             saveConfig();
             getLogger().info("Config for " + event.getPlayer().getName() + " successfully created.");
         }

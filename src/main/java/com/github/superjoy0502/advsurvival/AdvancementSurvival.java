@@ -61,8 +61,8 @@ public class AdvancementSurvival extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
         getLogger().info("A player joined.");
-        getLogger().info("players:\n"+getConfig().getStringList("players"));
-        if (!getConfig().getStringList("players").contains(String.valueOf(event.getPlayer().getUniqueId()))){
+        getLogger().info("players:\n"+getConfig().getConfigurationSection("players"));
+        if (!getConfig().getConfigurationSection("players").contains(String.valueOf(event.getPlayer().getUniqueId()))){
             getLogger().warning("A config for " + event.getPlayer().getName() + " does not exist! Creating one...");
 
             getConfig().addDefault("players." + event.getPlayer().getUniqueId(), new ArrayList<String>());
@@ -84,7 +84,7 @@ public class AdvancementSurvival extends JavaPlugin implements Listener {
         }
 
         getConfig().set("players." + event.getPlayer().getUniqueId(), advancementArrayList);
-        getLogger().info("Config for " + event.getPlayer().getName() + " successfully created.");
+        getLogger().info("List for " + event.getPlayer().getName() + " successfully created.");
     }
 
     // Add advancement to list when achieved

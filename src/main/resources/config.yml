@@ -1,2 +1,44 @@
-# Do not edit this region
+# Preferences
+enablePlugin: false
+modifiers:
+    # Minecraft
+    story/root:
+    # Stone Age
+    story/mine_stone:
+    # Getting an Upgrade
+    story/upgrade_tools:
+    # Acquire Hardware
+    story/smelt_iron:
+        type: conditional
+        condition:
+            craft_item: ['IRON_AXE', 'IRON_BARS', 'IRON_BOOTS', 'IRON_CHESTPLATE', 'IRON_DOOR', 'IRON_HELMET', 'IRON_HOE', 'IRON_LEGGINGS', 'IRON_PICKAXE', 'IRON_SHOVEL', 'IRON_SWORD', 'IRON_TRAPDOOR']
+            chance: 0.05
+        reward:
+            item: IRON_INGOT
+    # Suit Up
+    story/obtain_armor:
+    # Hot Stuff
+    story/lava_bucket:
+    # Isn't It Iron Pick
+    story/iron_tools:
+    # Not Today, Thank You
+    story/deflect_arrow:
+    # Ice Bucket Challenge
+    story/form_obsidian:
+    # Diamonds!
+    story/mine_diamond:
+    # We Need to Go Deeper
+    story/enter_the_nether:
+    # Cover Me With Diamonds
+    story/shiny_gear:
+    # Enchanter
+    story/enchant_item:
+    # Zombie Doctor
+    story/cure_zombie_villager:
+    # Eye Spy
+    story/follow_ender_eye:
+    # The End?
+    story/enter_the_end:
+
+# Do not edit this region unless you know exactly what you are doing
 players:

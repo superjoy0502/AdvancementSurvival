@@ -2,12 +2,6 @@ package com.github.superjoy0502.advsurvival;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.advancement.Advancement;
-import org.bukkit.advancement.AdvancementProgress;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.CraftItemEvent;
@@ -16,10 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.UUID;
 
 public class AdvancementSurvival extends JavaPlugin implements Listener {
@@ -69,13 +60,13 @@ public class AdvancementSurvival extends JavaPlugin implements Listener {
     // Detect what advancements player has achieved and reassign them on a new list
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event){
+    public void onPlayerJoin(PlayerJoinEvent event) {
         if (!pluginEnabled) {
             return;
         }
         getLogger().info("A player joined.");
-        getLogger().info("players:\n"+getConfig().getConfigurationSection("players"));
-        if (!getConfig().getConfigurationSection("players").contains(String.valueOf(event.getPlayer().getUniqueId()))){
+        getLogger().info("players:\n" + getConfig().getConfigurationSection("players"));
+        if (!getConfig().getConfigurationSection("players").contains(String.valueOf(event.getPlayer().getUniqueId()))) {
             getLogger().warning("A config for " + event.getPlayer().getName() + " does not exist! Creating one...");
 
             getConfig().addDefault("players." + event.getPlayer().getUniqueId(), new ArrayList<String>());
@@ -103,14 +94,14 @@ public class AdvancementSurvival extends JavaPlugin implements Listener {
     // Add advancement to list when achieved
 
     @EventHandler
-    public void onAdvancementAchieved(PlayerAdvancementDoneEvent event){
+    public void onAdvancementAchieved(PlayerAdvancementDoneEvent event) {
         if (!pluginEnabled) {
             return;
         }
         UUID uuid = event.getPlayer().getUniqueId();
         String advancementKey = String.valueOf(event.getAdvancement().getKey());
 
-        if (!advancementKey.contains("minecraft:recipes/")){
+        if (!advancementKey.contains("minecraft:recipes/")) {
             if (Bukkit.getOfflinePlayer(uuid) != null && Bukkit.getOfflinePlayer(uuid).isOnline()) {
                 getLogger().info(Bukkit.getPlayer(uuid).getName() + " has completed the advancement: " + advancementKey + "! Editing the config file...");
             }
@@ -123,9 +114,9 @@ public class AdvancementSurvival extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onItemCraft(CraftItemEvent event){
+    public void onItemCraft(CraftItemEvent event) {
 
-        if (event.getRecipe().getResult().isSimilar(new ItemStack(Material.IRON_AXE))){
+        if (event.getRecipe().getResult().isSimilar(new ItemStack(Material.IRON_AXE))) {
 
         }
     }

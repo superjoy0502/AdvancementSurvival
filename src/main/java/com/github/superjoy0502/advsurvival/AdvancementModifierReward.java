@@ -6,5 +6,6 @@ import org.bukkit.potion.PotionEffect;
 
 public class AdvancementModifierReward {
     ItemStack itemStack;
-    PotionEffect potionEffect = P
+    PotionEffect potionEffect;
+
 }
